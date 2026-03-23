@@ -1,0 +1,43 @@
+DDL（作用于数据库和表）：
+1.数据库操作
+1）查询所有数据库
+SHOW DATABASES;
+2）查询当前数据库
+SELECT DATABASE ();
+3）创建数据库
+CREATE DATABASE [IF NOT EXISTS] 数据库名 [DEFAULT CHARSET 字符集] [COLLATE 排序规则];
+4）删除数据库
+DROP DATABASE [IF EXISTS] 数据库名；
+5）使用数据库
+USE 数据库名；
+2.表操作
+1）表创建：
+Create table
+2）表查询：
+  查询当前数据库所有表 SHOW TABLES;
+  查询表结构 DESC 表名；
+  查询指定表的建表语句 SHOW CREATE TABLE 表名；
+  ~~select * from 表名
+3）表修改：
+~~DDL语言可以在datagrip中快速完成
+3.数据类型：
+double(int a, int b)   a-位数（包括小数点） b-（精确到小数点后第b位）
+char(int a);--占用a个空间
+varchar（int a）--最多占用a个空间
+DML（作用于表中的数据）：
+1.增加数据 INSERT
+INSERT INTO 表名 (字段 1, 字段 2) VALUES (值 1, 值 2);
+INSERT INTO 表名 (字段 1, 字段 2) VALUES (值 1, 值 2),(值 1, 值 2),(值 1, 值 2);
+2.修改数据 UPDATE
+UPDATE 表明 字段 = 值，字段 = 值 [where]
+3.删除数据 DELETE
+DELETE FROM 表明[where] （没有where就删除表的全部数据）
+
+DQL（查询数据）
+查询所有字段 SELECT * FROM 表名；
+SELECT 字段‘别名’，字段，FROM 表名 WHERE [条件]——目前只用得到这三个
+（‘别名’只是增强可读性，不影响编译）
+SELECT distinct 字段 from 表名：相同的数据只会展示一次
+条件查询：
+在语句后面加where，类比编译语言中的if，对数据的某一种类型限制
+eg.SELECT age FROM student WHERE gender = '女';
