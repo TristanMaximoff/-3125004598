@@ -1,0 +1,26 @@
+其他笔记：
+1.SqlSessionFactory（连接数据库和java）——MyBatis的东西
+1）造工厂（连数据库） 
+// 加载 mybatis-config.xml 连接数据库，创建工厂
+factory = new SqlSessionFactoryBuilder().build(
+   Resources.getResourceAsStream("mybatis-config.xml")
+);
+2） 开会话（开通道） 
+SqlSession session = factory.openSession(true);
+3） 拿Mapper（干活）
+  UserMapper um = session.getMapper(UserMapper.class);
+  RepairMapper rm = session.getMapper(RepairMapper.class);
+
+2.public static void main(String[] args) throws Exception {   //throws Exception---免责申明
+1）作用：
+  告诉 Java：我这个方法可能会出错
+  出错了我不自己处理
+  直接往上抛，让调用我的人去管
+2）写的场合：
+  会报错的代码必须写，比如：
+  读文件
+  连数据库
+  网络连接
+  读取配置
+3）写的位置：
+方法小括号后面
