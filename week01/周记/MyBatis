@@ -1,0 +1,14 @@
+例子：
+@Insert("INSERT INTO repair(student_account,device_type,description,status) VALUES(#{studentAccount},#{deviceType},#{description},#{status})")
+int addRepair(Repair repair);
+1.@Insert告知SQL的类型
+  DataGrip 里写的 SQL，原封不动发到 MySQL 执行
+  @Insert/@Select/@Update/@Delete 必须和括号内的SQL类型一一对应（改了会报错）
+2.括号内语句
+INTO后+数据库表中的字段，VALUES（#{}）中的是java类中的对象的属性值
+3.int addRepair（Repair repair）：
+对service层里调用的方法的声明
+
+在main里面想先创建一个new repair对象，对他赋值了之后，java类中就有了一个有值的对象，
+这时我调用Service里面写的自定义方法repairService.addRepair(repair)，因为是我自定义的方法所以java得再去mapper层找，
+就找到了mapper里addRepair上一行的MySQL操作，将数据从java存入数据库，结束
