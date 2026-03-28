@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/dorm_repair?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: 535532156
+
+mybatis:
+  type-aliases-package: com.itheima.dormrepairsystemspringboot.pojo
+  configuration:
+    map-underscore-to-camel-case: true
+
+server:
+  port: 8080
