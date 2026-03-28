@@ -1,1 +1,100 @@
+起步依赖原理分析：
+<parent>技术版本信息
+Starter - 所需功能的坐标合集
+配置文件分类：
+配置有默认值，
+可使用application.properties或者application.yml（yaml）替换
+默认配置文件名称：application
+同一目录下优先级：pro>yml>yaml(属性都存在的情况下)
+properties：
+格式：key=value
+  server（服务器相关设置）.port（端口号）=8080
+Yml:
+格式：
+server:
+  （只空两格）Port: (一个空格)8080
+特点：
+效果和properties和xml一样
+层级关系清晰
+简洁、以数据为核心
+语法：
+·大小写敏感
+·数据值前边必须有空格，作为分隔符
+·使用缩进表示层级关系
+·缩进时不允许使用Tab键，只允许使用空格(各个系统Tab对应的空格数目可能不同，导致层次混乱)
+·缩进的空格数目不重要，只要相同层级的元素左侧对齐即可
+#表示注释，从这个字符一直到行尾，都会被解析器忽略
+数据格式：
+对象（map）：键值对key-value-pair的集合
+person：
+  name: zhangsan
+数组：
+Address:
+    - （一个空格）beijing
+    - shanghai
+纯量：（值本身）
+msg1: 'hello \n world'  #单引号忽略转义字符，双引号识别
+参数引用：
+name: lisi
+person:
+Name: ${name}
+读取配置文件内容：
+@Value（key）：
+变量
+将配置文件里key的值赋给变量
+Environment
+@Autowired  //自动创建对象不用自己new
+private Environment env;
+
+System.out.println(env.getProperty("person.name"));
+@ConfigurarionProperties（配置）
+[图片]
+[图片]
+总结：value是一个一个值放进去，environment是创建一个接口方便送值过去，configuration是构建一个和配置文件里变量类似的容器放在java类里，容器里的值是一一对应的
+profile配置方式：
+1.properties：
+spring.profiles.active=（端口号{server.port}）
+2.yml
+spring:
+profiles:
+  active: pro
+
+---
+server:
+  port: 8081
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+---
+server:
+  port: 8082
+
+spring:
+  config:
+    activate:
+      on-profile: test
+
+---
+server:
+  port: 8083
+spring:
+  config:
+    activate:
+      on-profile: pro
+
+---
+profile激活方式：
+1.虚拟机参数：
+-Dspring.profiles.active=dev
+2.在配置文件中：
+spring:
+  profiles:
+    active: pro、
+3.命令行参数：
+Java-jar xxx.jar --spring.profiles.active=dev
+profile内外部加载顺序：
+SpringBoot整合MyBatis
 
