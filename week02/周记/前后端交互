@@ -1,0 +1,47 @@
+JWT
+执行流程
+1. 用户登录：前端发送账号密码
+2. 后端校验：账号密码正确，生成 JWT Token 返回前端
+3. 前端存储：存入 localStorage
+4. 前端请求：在请求头中带上 Token
+5. 后端拦截：校验 Token 是否合法、过期
+6. 合法放行，不合法返回 401 未登录
+结构（三部分用.分隔）
+Header（头部）
+  声明加密算法、Token 类型
+[图片]
+Payload（载荷）
+  存放用户信息（id、账号、角色）、过期时间
+  只编码不加密，不能存密码
+[图片]
+Signature（签名）
+  使用密钥 + Header + Payload 加密生成
+  防止 Token 被篡改
+
+登录拦截器：
+request & response 方法笔记（极简版，直接背）
+一、HttpServletRequest类（前端请求）
+1. request.getHeader("token")
+  - 作用：从请求头里取数据
+  - 这里用来拿前端传的 token
+2. request.setAttribute("key", value)
+  - 作用：往本次请求里存数据
+  - 存完后，后面的 Controller 可以取出来用
+  - 例：存 userId、role
+
+---
+二、HttpServletResponse类（后端返回给前端的响应
+）
+1. response.setStatus(401)
+  - 作用：设置 HTTP 状态码
+  - 401 = 未登录 / 权限不足 /token 无效
+2. 扩展
+  - response.getWriter()：返回文字提示
+  - response.setContentType()：设置返回格式
+
+---
+三、在拦截器里的总结
+- 拿 token → request.getHeader("token")
+- 存用户信息 → request.setAttribute(...)
+- 告诉前端未登录 → response.setStatus(401)
+需要我帮你整理成可直接复制到笔记里的纯文本版吗？
