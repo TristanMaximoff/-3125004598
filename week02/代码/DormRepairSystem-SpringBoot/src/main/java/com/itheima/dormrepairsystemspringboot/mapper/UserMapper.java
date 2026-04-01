@@ -1,0 +1,39 @@
+package com.itheima.dormrepairsystemspringboot.mapper;
+import com.itheima.dormrepairsystemspringboot.pojo.User;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+public interface UserMapper {
+    @Select("SELECT * FROM user WHERE account = #{account}")
+    User findByAccount(String account);
+    //传入账号的参数，返回账号对应的用户对象
+
+    @Insert("INSERT INTO user(account,password,role) VALUES(#{account},#{password},#{role})")
+    int addUser(User user);
+    //传入user的账户、密码、角色存入数据库，返回受影响行数，1成功0失败
+
+    @Update("<script>" +
+            "UPDATE user " +
+            "<set>" +
+            "  <if test='password != null'>password=#{password},</if>" +
+            "  <if test='dormDirection != null'>dormDirection=#{dormDirection},</if>" +
+            "  <if test='dormBuilding != null'>dormBuilding=#{dormBuilding},</if>" +
+            "  <if test='dormRoom != null'>dormRoom=#{dormRoom},</if>" +
+            "  <if test='dormStatus != null'>dormStatus=#{dormStatus},</if>" +
+            "</set>" +
+            "WHERE id=#{id}" +
+            "</script>")
+    int updateUser(User user);
+    //更新用户数据，密码/宿舍方位/宿舍栋数/宿舍门牌号/登录状态/
+    //只更改对应编号的数据
+
+    // 根据id查询用户
+    @Select("SELECT * FROM user WHERE id = #{id}")
+    User findById(Integer id);
+}
+
+//接口创建对象的流程：
+//SqlSession sqlSession = MyBatisUtil.getSqlSession();
+//UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+//调用方法：User user = mapper.findByAccount("3125001");
